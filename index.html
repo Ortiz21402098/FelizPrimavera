@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Feliz Primavera!</title>
     <style>
-        /* Variables de colores y estilos base */
         :root {
-            --bg-color: #fcf8f2;
-            --primary-color: #e5a93c;
+            --bg-color: #fdfbf7;
+            --primary-color: #f59e0b;
             --stem-color: #2e7d32;
-            --petal-color: #ffd54f;
+            --petal-color: #ffffff;
+            --center-color: #f59e0b;
             --text-color: #333333;
         }
 
@@ -31,7 +31,6 @@
             overflow-x: hidden;
         }
 
-        /* Contenedor Principal (Tarjeta) */
         .card {
             background: #ffffff;
             border-radius: 20px;
@@ -56,30 +55,29 @@
             margin-bottom: 25px;
         }
 
-        /* Botón Sorpresa */
-        .btn-surprise {
+        .btn-surprise, .btn-next {
             background: linear-gradient(135deg, #f59e0b, #d97706);
             color: white;
             border: none;
             padding: 14px 28px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
         }
 
-        .btn-surprise:active {
+        .btn-surprise:active, .btn-next:active {
             transform: scale(0.95);
         }
 
-        /* Sección de la Sorpresa (Oculta al inicio) */
         .surprise-container {
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .surprise-container.show {
@@ -89,110 +87,142 @@
             opacity: 1;
         }
 
-        /* Animación de la Flor Amarilla en CSS */
+        /* Contenedor de Margarita Interactiva */
         .flower-wrapper {
             position: relative;
-            width: 150px;
-            height: 220px;
-            margin: 20px 0;
+            width: 180px;
+            height: 230px;
+            margin: 15px 0;
         }
 
         .flower-center {
             position: absolute;
-            top: 50px;
+            top: 55px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 45px;
-            height: 45px;
-            background: #8d5b4c;
+            transform: translateX(-50%) scale(0);
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #fbbf24, #d97706);
             border-radius: 50%;
             z-index: 2;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.15);
+            transition: transform 0.5s ease;
+        }
+
+        .flower-center.grow {
+            transform: translateX(-50%) scale(1);
         }
 
         .petals {
             position: absolute;
-            top: 50px;
+            top: 55px;
             left: 50%;
             transform: translateX(-50%);
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             z-index: 1;
         }
 
         .petal {
             position: absolute;
             background: var(--petal-color);
-            width: 35px;
-            height: 80px;
-            border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
-            left: 5px;
-            top: -17px;
+            width: 22px;
+            height: 68px;
+            border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+            left: 10px;
+            top: -22px;
             transform-origin: bottom center;
-            box-shadow: inset 0 -5px 10px rgba(245, 158, 11, 0.5);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1), inset 0 -4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #f3f4f6;
+            opacity: 0;
+            transform: rotate(var(--rot)) scale(0);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Generar distribución circular para los pétalos */
-        .petal:nth-child(1)  { transform: rotate(0deg); }
-        .petal:nth-child(2)  { transform: rotate(45deg); }
-        .petal:nth-child(3)  { transform: rotate(90deg); }
-        .petal:nth-child(4)  { transform: rotate(135deg); }
-        .petal:nth-child(5)  { transform: rotate(180deg); }
-        .petal:nth-child(6)  { transform: rotate(225deg); }
-        .petal:nth-child(7)  { transform: rotate(270deg); }
-        .petal:nth-child(8)  { transform: rotate(315deg); }
+        .petal.visible {
+            opacity: 1;
+            transform: rotate(var(--rot)) scale(1);
+        }
 
-        /* Tallo y Hojas */
+        /* Distribución de 12 pétalos para la margarita */
+        .petal:nth-child(1)  { --rot: 0deg; }
+        .petal:nth-child(2)  { --rot: 30deg; }
+        .petal:nth-child(3)  { --rot: 60deg; }
+        .petal:nth-child(4)  { --rot: 90deg; }
+        .petal:nth-child(5)  { --rot: 120deg; }
+        .petal:nth-child(6)  { --rot: 150deg; }
+        .petal:nth-child(7)  { --rot: 180deg; }
+        .petal:nth-child(8)  { --rot: 210deg; }
+        .petal:nth-child(9)  { --rot: 240deg; }
+        .petal:nth-child(10) { --rot: 270deg; }
+        .petal:nth-child(11) { --rot: 300deg; }
+        .petal:nth-child(12) { --rot: 330deg; }
+
         .stem {
             position: absolute;
-            top: 72px;
+            top: 76px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 8px;
-            height: 130px;
+            transform: translateX(-50%) scaleY(0);
+            transform-origin: top center;
+            width: 7px;
+            height: 135px;
             background: var(--stem-color);
             border-radius: 4px;
             z-index: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .stem.grow {
+            transform: translateX(-50%) scaleY(1);
         }
 
         .leaf {
             position: absolute;
-            width: 30px;
-            height: 15px;
+            width: 28px;
+            height: 14px;
             background: var(--stem-color);
             border-radius: 100px 0px 100px 0px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .leaf.visible {
+            opacity: 1;
         }
 
         .leaf.left {
             top: 130px;
-            left: 38px;
+            left: 53px;
             transform: rotate(-25deg);
         }
 
         .leaf.right {
             top: 110px;
-            right: 38px;
+            right: 53px;
             transform: scaleX(-1) rotate(-25deg);
         }
 
-        /* Mensaje Especial */
         .message-box {
             background: #fffbe3;
             border: 1px solid #fef3c7;
             border-radius: 12px;
             padding: 18px;
-            margin-top: 15px;
+            margin-top: 10px;
             color: #4b5563;
             font-size: 1.05rem;
             line-height: 1.6;
             box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
         .message-box strong {
             color: #d97706;
         }
 
-        /* Efecto de flores cayendo (Confeti primaveral) */
         .falling-flower {
             position: fixed;
             top: -20px;
@@ -215,19 +245,23 @@
     <div class="card">
         <div id="initial-content">
             <h1>¡Hola, mi amor! 🌼</h1>
-            <p class="intro">Tengo una pequeña sorpresa especial de primavera para vos...</p>
-            <button class="btn-surprise" onclick="mostrarSorpresa()">Ver sorpresa ✨</button>
+            <p class="intro">Tengo algo muy especial preparado para vos...</p>
+            <button class="btn-surprise" onclick="mostrarSorpresa()">Empezar ✨</button>
         </div>
 
         <div class="surprise-container" id="surprise">
-            <h1>¡Feliz Día de la Primavera! 🌻</h1>
+            <h1>¡Feliz Día de la Primavera! 🌼</h1>
             
             <div class="flower-wrapper">
-                <div class="stem"></div>
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-                <div class="flower-center"></div>
+                <div class="stem" id="stem"></div>
+                <div class="leaf left" id="leaf1"></div>
+                <div class="leaf right" id="leaf2"></div>
+                <div class="flower-center" id="flower-center"></div>
                 <div class="petals">
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
+                    <div class="petal"></div>
                     <div class="petal"></div>
                     <div class="petal"></div>
                     <div class="petal"></div>
@@ -239,30 +273,76 @@
                 </div>
             </div>
 
-            <div class="message-box">
-                Gracias por estar siempre a mi lado, por apoyarme en cada momento y por ser tan especial. 
-                <br><br>
-                <strong>¡Gracias por ser vos! ❤️</strong>
+            <div class="message-box" id="message-text">
+                Toca el botón de abajo para descubrir una razón... 🌼
             </div>
+
+            <button class="btn-next" id="btn-next" onclick="avanzarFlor()">Descubrir razón ✨</button>
         </div>
     </div>
 
     <script>
+        const mensajes = [
+            "Te amo porque sos simple y tenés una luz hermosa.",
+            "Te amo porque sos tranquila y transmitís mucha paz.",
+            "Te amo porque sos cálida y siempre tenés un gesto lindo.",
+            "Te amo por la paciencia y la dulzura que me tenés.",
+            "Te amo por la forma en que iluminás mis días.",
+            "Te amo por tu apoyo incondicional en cada momento.",
+            "Te amo por ser mi compañera y estar siempre a mi lado.",
+            "Te amo por tus abrazos que me dan tranquilidad.",
+            "Te amo por tu forma de escucharme siempre.",
+            "Te amo por hacer que todo sea más lindo juntos.",
+            "Te amo por tu sonrisa que alegra cualquier día.",
+            "¡Gracias por ser vos! Sos lo más lindo que me pasó. ❤️"
+        ];
+
+        let paso = 0;
+
         function mostrarSorpresa() {
-            // Ocultar la pantalla inicial
             document.getElementById('initial-content').style.display = 'none';
-            
-            // Mostrar la sorpresa
             const surprise = document.getElementById('surprise');
             surprise.classList.add('show');
+            
+            // Aparecen el tallo y el centro amarillo de la margarita al inicio
+            document.getElementById('stem').classList.add('grow');
+            document.getElementById('flower-center').classList.add('grow');
+        }
 
-            // Iniciar lluvia de flores/emojis
-            crearLluviaPrimavera();
+        function avanzarFlor() {
+            const petals = document.querySelectorAll('.petal');
+            const messageText = document.getElementById('message-text');
+            const btnNext = document.getElementById('btn-next');
+
+            if (paso < mensajes.length) {
+                // Hacer visible el pétalo blanco correspondiente
+                petals[paso].classList.add('visible');
+                
+                // Mostrar hojas en ciertos pasos
+                if (paso === 3) document.getElementById('leaf1').classList.add('visible');
+                if (paso === 8) document.getElementById('leaf2').classList.add('visible');
+
+                // Cambiar el mensaje
+                messageText.innerHTML = `<strong>${mensajes[paso]}</strong>`;
+                
+                paso++;
+
+                // Si se revelaron todos los pétalos
+                if (paso === mensajes.length) {
+                    btnNext.innerText = "¡Te amo infinitamente! 🌼";
+                    btnNext.style.background = "linear-gradient(135deg, #10b981, #059669)";
+                    btnNext.disabled = true;
+                    btnNext.style.cursor = "default";
+                    crearLluviaPrimavera();
+                } else {
+                    btnNext.innerText = "Ver otra razón ✨";
+                }
+            }
         }
 
         function crearLluviaPrimavera() {
-            const simbolos = ['🌼', '🌻', '💛', '✨', '🌸'];
-            for (let i = 0; i < 25; i++) {
+            const simbolos = ['🌼', '🌸', '💛', '✨', '🌿'];
+            for (let i = 0; i < 30; i++) {
                 setTimeout(() => {
                     const el = document.createElement('div');
                     el.classList.add('falling-flower');
@@ -272,13 +352,13 @@
                     el.style.fontSize = (Math.random() * 15 + 15) + 'px';
                     document.body.appendChild(el);
 
-                    // Eliminar del DOM después de la animación
                     setTimeout(() => {
                         el.remove();
                     }, 5000);
-                }, i * 200);
+                }, i * 180);
             }
         }
     </script>
 </body>
 </html>
+
