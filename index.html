@@ -3,37 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Felicitaciones a la Nueva Conductora</title>
+    <title>¡Feliz Día a la Nueva Conductora!</title>
     <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --primary-color: #d97706;
+            --text-color: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f9f9f9;
-        }
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            max-width: 500px;
-            text-align: center;
+            overflow-x: hidden;
         }
-        .card img {
-            max-width: 100%;
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 450px;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            color: #d97706;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .image-container {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 100%;
             height: auto;
-            border-radius: 8px;
+            display: block;
+        }
+
+        .message-box {
+            background: #fffbe3;
+            border: 1px solid #fef3c7;
+            border-radius: 12px;
+            padding: 16px;
+            color: #4b5563;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .falling-flower {
+            position: fixed;
+            top: -20px;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 100;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <img src="watermarked_img_10727724481314373221.jpg" alt="¡Feliz día a la nueva conductora te desea Fraquito Chiquitito!">
+        <h1>¡Feliz día a la nueva conductora! 🚗🌼</h1>
+        
+        <div class="image-container">
+            <!-- La imagen debe llamarse igual que el archivo subido a GitHub -->
+            <img src="1790100815749.jpg" alt="Margaritas de felicitación">
+        </div>
+
+        <div class="message-box">
+            Te desea <strong>Fraquito Chiquitito</strong> ❤️
+        </div>
     </div>
 
+    <script>
+        // Lluvia primaveral de flores al cargar la página
+        function crearLluvia() {
+            const simbolos = ['🌼', '🌸', '💛', '✨', '🚗'];
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.classList.add('falling-flower');
+                    el.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    el.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                    document.body.appendChild(el);
+
+                    setTimeout(() => {
+                        el.remove();
+                    }, 5000);
+                }, i * 200);
+            }
+        }
+        window.onload = crearLluvia;
+    </script>
 </body>
 </html>
+
